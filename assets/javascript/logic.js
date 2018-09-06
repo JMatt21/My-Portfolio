@@ -1,40 +1,127 @@
 $(document).ready(function () {
-    const pages = [
-        newPage('<h2>About Me</h2> <hr> <div class="clearfix" style="margin: 0 0 15px 0"> <div> <img src="assets/images/Me.jpg" id="profilepicture" alt="A photo of me" id="MyPhoto.png"> </div> <div> <p> I am a 21 year old male with an Assosiates in General Science currently attending a University of Arizona Coding Bootcamp. I have taught myself a few coding launguages such as C, Java, Python and have taken a course in Data Structures for Java. Before taking this Bootcamp course I thought CSS stood for Can Script Sometimes. I really like spaghetti and taco tuesday should be cancelled. </p> </div> </div> <p> I have a few special talents such as: <ul> <li>3+ years of drumline experience</li> <li>Above average sight reading</li> <li>Calculating friction of a Box using less than 2 papers</li> <li>Taking care of 6 big dumb cats</li> <li>Digesting food and fluids</li> <li>Not knowing the difference between a few and several</li> </ul> </p>'),//main page
-        newPage('<h2> Portfolio </h2> <hr><!-- <div class="PortImg"> <img src="assets/images/Java.png" alt=""> <div class="PortTxt"> <a href="" target="_blank" class="PortTxtColor"> Java </a> </div> </div> --> <div class="PortImg"> <img src="assets/images/FE_RPG.png" alt=""> <div class="PortTxt"> <a href="https://jmatt21.github.io/FE_RPG/" target="_blank" class="PortTxtColor"> Fire Emblem RPG </a> </div> </div> <div class="PortImg"> <img src="assets/images/music_trivia.png"> <div class="PortTxt"> <a href="https://jmatt21.github.io/TriviaGame/" target="_blank" class="PortTxtColor"> Music Trivia </a> </div> </div> <div class="PortImg"> <img src="assets/images/GifTastic.png"> <div class="PortTxt"> <a href="https://jmatt21.github.io/GifTastic/" target="_blank" class="PortTxtColor"> GifTastic Web-Page </a> </div> </div> <div class="PortImg"> <img src="assets/images/Train_Activity.png"> <div class="PortTxt"> <a href="https://jmatt21.github.io/Train_Activity/" target="_blank" class="PortTxtColor"> Train Activity </a> </div> </div> <div class="PortImg"> <img src="assets/images/hydrobudget.png"> <div class="PortTxt"> <a href="https://youngbrennin.github.io/HydroBudget/" target="_blank" class="PortTxtColor"> Hydro Budget </a> </div> </div> <div class="PortImg"> <img src="assets/images/Friend_Finder.png"> <div class="PortTxt"> <a href="https://sleepy-hollows-58676.herokuapp.com/" target="_blank" class="PortTxtColor"> Friend Finder </a> </div> </div> <div class="PortImg"> <img src="assets/images/burger.png"> <div class="PortTxt"> <a href="https://powerful-shore-77872.herokuapp.com/" target="_blank" class="PortTxtColor"> Burger Muncher </a> </div> </div>'),
-        newPage('<h2> Contact Me </h2> <hr> <p> Email: MatthewBertrandt@gmail.com </p> <p> Github: <a href="https://github.com/JMatt21" target="_blank">JMatt21</a> </p> <p> LinkedIn: <a href="https://www.linkedin.com/in/matthew-bertrandt-153000162/" target="_blank">Matthew Bertrandt</a> </p> <p> <a href="https://github.com/JMatt21" target="_blank"> <img src="assets/images/github-icon.png" class="contactIcon"> </a> <a href="https://www.linkedin.com/in/matthew-bertrandt-153000162/" target="_blank"> <img src="assets/images/linkedin-icon.png" class="contactIcon"> </a> </p> </div>')//contact page
-    ];
-    // let current_page;
-    function newPage(content) {
-        const display_page = $("#content");
-        let ret = {
-            content: content,
-            display: function () {
-                display_page.html(this.content);
-                // current_page = this;
-            },
-            toNext: function () {
-                pages[pages.indexOf(this) + 1];
-            },
-            toPrevious: function () {
-                pages[pages.indexOf(this) - 1];
+
+    // Global Variables 
+    let maxNumberOfListItems = getMaxListItemNumber();
+    console.log("max list items", maxNumberOfListItems);
+
+    // Animate.css jquery function
+    // use .animateCss()
+    $.fn.extend({
+        animateCss: function (animationName, callback) {
+            var animationEnd = (function (el) {
+                var animations = {
+                    animation: 'animationend',
+                    OAnimation: 'oAnimationEnd',
+                    MozAnimation: 'mozAnimationEnd',
+                    WebkitAnimation: 'webkitAnimationEnd',
+                };
+
+                for (var t in animations) {
+                    if (el.style[t] !== undefined) {
+                        return animations[t];
+                    }
+                }
+            })(document.createElement('div'));
+
+            this.addClass('animated ' + animationName).one(animationEnd, function () {
+                $(this).removeClass('animated ' + animationName);
+
+                if (typeof callback === 'function') callback();
+            });
+
+            return this;
+        },
+    });
+
+    // Functions
+    function getMaxListItemNumber() {
+        let numOfListItems = 1;
+        while ($(".list-item-" + numOfListItems).text()) {
+            numOfListItems++;
+        }
+        return numOfListItems - 1;
+    }
+
+    function displayList(listIndex) {
+        $("#lists").attr("current-index", listIndex);
+        for (let i = 1; i <= maxNumberOfListItems; i++) {
+            if (i != listIndex) {
+                $(".list-item-" + i).hide();
+            } else {
+                $(".list-item-" + i).show().animateCss('fadeIn', () => { });
             }
         }
-        return ret;
+    };
+
+    function traverseList() {
+        const direction = $(this).attr("direction");
+        let currentListIndex = parseInt($("#lists").attr("current-index"));
+        if (direction === "left" && currentListIndex > 1) {
+            currentListIndex--;
+            
+            displayList(currentListIndex);
+        } else if (direction === "right" && currentListIndex < maxNumberOfListItems) {
+            currentListIndex++;
+            $("#lists").attr("current-index", currentListIndex);
+            displayList(currentListIndex);
+        }
     }
-    //on startup
-    pages[0].display();
 
-    //Link Buttons
-    $("#about").on('click', function(){
-        pages[0].display();
-    });
-    $("#portfolio").on('click', function(){
-        pages[1].display();
-    });
-    $("#contact").on('click', function(){
-        pages[2].display();
-    });
+    function Card(projectName, gitHubURL, websiteURL, imageLink, description) {
+        this.projectName = projectName;
+        this.gitHubURL = gitHubURL;
+        this.websiteURL = websiteURL;
+        this.imageLink = "./assets/" + imageLink;
+        this.description = description;
+    }
 
-    //to-do added dynamic portfolio images...
+    function generateCards() {
+        const cards = [
+            new Card("Fire Emblem RPG", "https://github.com/JMatt21/unit-4-game", "https://jmatt21.github.io/unit-4-game/", "./images/FE_RPG.png", "This is a Fire Emblem themed duel simulator using only front-end JS."),
+            new Card("Music Trivia", "https://github.com/JMatt21/TriviaGame", "https://jmatt21.github.io/TriviaGame/", "./images/music_trivia.png", "A modular front-end JS game. Questions can easily be added with any number of answers."),
+            new Card("Gif-Tastic", "https://github.com/JMatt21/GifTastic", "https://jmatt21.github.io/GifTastic/", "./images/GifTastic.png", "This project uses the GiphyAPI to display gifs on the page. The user can search for gifs and can favorite certain gifs. Favorites are stored on the local storage of the browser."),
+            new Card("Catch a Train!", "https://github.com/JMatt21/Train_Activity", "https://jmatt21.github.io/Train_Activity/", "./images/Train_Activity.png", "This program allows users to schedule, edit, or remove trains. It uses Google's Firebase to read/edit/delete data and moment.js to calculate time."),
+            new Card("Hydro Budget", "https://youngbrennin.github.io/HydroBudget/", "https://github.com/youngbrennin/HydroBudget", "./images/hydrobudget.png", "This program is used for calculating a monthly budget for users. It also uses Firebase to store data. Users can select a date, name, and cost of a bill to add to their total bills. They can also set their savings."),
+            new Card("Friend Finder", "https://github.com/JMatt21/Friend-Man", "https://sleepy-hollows-58676.herokuapp.com/", "./images/Friend_Finder.png", "This app allows users to find friends by comparing scores they submitted on a survey and suggesting them the person with similar scores to them using JS logic and a MySQL database."),
+            new Card("Burger Muncher", "https://github.com/JMatt21/burger-muncher", "https://powerful-shore-77872.herokuapp.com/", "./images/burger.png", "Using HandleBars and MySQL, users can create and eat burgers than everyone can see."),
+
+        ];
+
+        for (card of cards) {
+            let newCard = $('<div class="project-content clearfix list list-item-' + (++maxNumberOfListItems) + '">');
+            let leftSide = $('<div class="project-left">');
+            let rightSide = $('<div class="project-right">');
+            let webLink = $('<a target="_blank">').attr("href", card.websiteURL)
+                .append($('<img>').attr({
+                    src: card.imageLink,
+                    class: "card-image"
+                }));
+
+            let gitLink = $('<a target="_blank">').attr("href", card.gitHubURL)
+                .append($('<div>').attr("class", "gitlink"));
+
+            let cardText = $('<div>').attr("class", "card-text")
+                .append($('<h3>').text(card.projectName))
+                .append($('<p>').text(card.description));
+            
+            // leftSide.append(webLink);
+            leftSide.append($('<img>').attr({
+                src: card.imageLink,
+                class: "card-image"
+            }));;
+            rightSide.append(cardText, gitLink)
+            newCard.append(leftSide, rightSide);
+            $('#lists').append(newCard);
+        }
+        console.log(maxNumberOfListItems);
+    }
+
+    // Clickables
+    $(".arrow").on("click", traverseList);
+
+    // On Startup
+    console.log("hi there c:");
+
+    generateCards();
+    displayList(1);
 });

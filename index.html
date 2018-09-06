@@ -4,27 +4,104 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My Bio</title>
+    <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" /> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
     <script src='https://code.jquery.com/jquery-3.3.1.js' integrity='sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=' crossorigin='anonymous'></script>
 </head>
 
 <body>
-    <div id="header">
-        <h1>
-            Matthew Bertrandt
-        </h1>
-        <h4 id="links">
-            <a id='about'>About &thinsp;</a>|
-            <a id='portfolio'>Portfolio &thinsp;</a>|
-            <a id='contact'>Contact</a>
-        </h4>
+    <div id="navbar" class="clearfix">
+        <a target="_blank" href="https://www.linkedin.com/in/matthew-bertrandt-153000162/" class="content-tab" title="My Linked-In">
+            <h3>Linkedin</h3>
+        </a>
+        <a target="_blank" href="https://github.com/JMatt21" class="content-tab" title="My Github">
+            <h3>gitHub</h3>
+        </a>
     </div>
-        <div id="content" class='clearfix'></div>
-    <div id="footer">Copyright ©</div>
 
+    <div id="content">
+
+        <div id="about-me">
+            <img id="me" src="assets/images/Me.jpg">
+            <h2>Matthew Bertrandt</h2>
+            <br>
+        </div>
+
+        <div id="lists-container">
+            <span class="arrow" direction="left"><i class="fas fa-arrow-left fa-lg"></i></span>
+            <span class="arrow" direction="right"><i class="fas fa-arrow-right fa-lg"></i></span>
+
+            <div id="lists" class="" current-index="1">
+                <div class="list list-item-1">
+                    <h2 class="list-header">About Me</h2>
+                    I am a 22 year old male with an Assosiates in General Science currently attending a University of Arizona Coding Bootcamp.
+                    I have taught myself a few coding launguages such as C, Java, Python and have taken a course in Data
+                    Structures for Java. I really like spaghetti and taco tuesday should be cancelled.
+                </div>
+                <div class="list list-item-2">
+                    <h2 class="list-header">Sweet Hobbies of Mine!</h2>
+                    <ul>
+                        <li>Video Games</li>
+                        <li>Playing Music: Piano & Marimba</li>
+                        <li>Biking</li>
+                        <li>Cooking & Baking</li>
+                    </ul>
+                </div>
+                <div class="list list-item-3">
+                    <h2 class="list-header">Things I'm Great At!</h2>
+                    <ul>
+                        <li>Problem Solving</li>
+                        <li>Math</li>
+                        <li>Re-learning Derivatives & Intergrals for the 9th time</li>
+                        <li>JQuery</li>
+                        <li>Photoshop</li>
+                        <li>Node.js</li>
+                        <li>MySQL</li>
+                        <li>MongoDB</li>
+                        <li>Javascript</li>
+                        <li>JQuery</li>
+                        <li>Python</li>
+                        <li>MS Powerpoint</li>
+                        <li>MS Excel</li>
+                    </ul>
+                </div>
+                <div class="list list-item-4">
+                    <h2 class="list-header">Things I'm Improving on.</h2>
+                    <ul>
+                        <li>Spelling & Grammer </li>
+                        <li>Web Design</li>
+                        <li>Mobile Friendly Interfaces</li>
+                        <li>Consistancy </li>
+                        <li>Orginization</li>
+                        <li>C</li>
+                        <li>C++</li>
+                        <li>Java</li>
+                        <li>Data Structures</li>
+                        <li>And everything from the last panel</li>
+                    </ul>
+                </div>
+                    <div class="list list-item-5">
+                        <h2 class="list-header">Education</h2>
+                        <ul>
+                            <li>Associates in Science: Physics</li>
+                            Chandler Gilbert Community College
+                            August 2014 - December 2017
+                            GPA: 3.7
+                            <br>
+                            <li>UoA Coding Bootcamp</li>
+                            April 2018 - Present
+                            Expecting Graduation October 2018
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 </body>
-    <script src='assets/javascript/logic.js'></script>
+<script src="assets/javascript/logic.js"></script>
+
 </html>
